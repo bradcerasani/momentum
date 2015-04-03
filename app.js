@@ -1,5 +1,6 @@
 var request = require('request');
 var parseString = require('xml2js').parseString;
+var fs = require('fs');
 
 // Github username
 var username = "bradcerasani";
@@ -12,7 +13,12 @@ request(url, function (error, response, body) {
       var currentDay = currentWeek[currentWeek.length - 1].$;
       var resultString = JSON.stringify(currentDay, null, 2);
 
-      console.log(resultString);
+      fs.writeFile("response.json", resultString, function(err) {
+        if (err) {
+          return console.log(err);
+        }
+        console.log("Today's contributions saved to response.json");
+      });
     });
   }
 });
