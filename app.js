@@ -3,15 +3,15 @@ var parseString = require('xml2js').parseString;
 var fs = require('fs');
 
 // Github username
-var username = "bradcerasani";
-var url = "https://github.com/users/" + username + "/contributions";
+var username = 'bradcerasani';
+var url = 'https://github.com/users/' + username + '/contributions';
 
 function writeFile(contents) {
-  fs.writeFile("response.json", contents, function(err) {
+  fs.writeFile('response.json', contents, function(err) {
     if (err) {
       return console.log(err);
     }
-    console.log("Today's contributions saved to response.json");
+    console.log('Today\'s Contributions saved to response.json');
   });
 }
 
