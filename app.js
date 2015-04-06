@@ -1,5 +1,6 @@
 var request = require('request');
 var parseString = require('xml2js').parseString;
+var nanybar = require('nanybar');
 var fs = require('fs');
 
 // Github username
@@ -15,6 +16,37 @@ function writeFile(contents) {
   });
 }
 
+function updateIcon(data) {
+  var dataFill = data.fill;
+  var dataCount = data["data-count"];
+
+  var iconColors = {
+    '#eeeeee': function() {
+      return nanybar('inactive--light');
+    },
+    '#d6e685': function() {
+      return nanybar('active-1');
+    },
+    '#8cc665': function() {
+      return nanybar('active-2');
+    },
+    '#44a340': function() {
+      return nanybar('active-3');
+    },
+    '#1e6823': function() {
+      return nanybar('active-4');
+    }
+  };
+
+  if (iconColors[dataFill]) {
+    return iconColors[dataFill]();
+  } else if (dataCount >= 1) {
+    return nanybar('active-1');
+  } else {
+    return nanybar('warning-red');
+  }
+}
+
 function getData(url) {
   request(url, function (error, response, body) {
     if (!error && response.statusCode == 200) {
@@ -24,7 +56,8 @@ function getData(url) {
         var currentDay = currentWeek[currentWeek.length - 1].$;
         var resultString = JSON.stringify(currentDay, null, 2);
 
-        writeFile(resultString);
+        updateIcon(currentDay);
+        // writeFile(resultString);
       });
     }
   });
