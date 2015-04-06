@@ -63,4 +63,8 @@ function getData(url) {
   });
 }
 
+setInterval(function(){
+  getData(url);
+}, 30000);
+
 getData(url);
